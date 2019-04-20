@@ -6,7 +6,7 @@ args:
     - setup:
         short: s
         long: setup
-        help: Setup the clean chroot environment.
+        help: Setup the clean chroot environment (automatically setup blackarch keyring).
         takes_value: false
     - update:
         short: u
