@@ -1,0 +1,25 @@
+# This file is part of BlackArch Linux ( https://www.blackarch.org/ ).
+# See COPYING for license details.
+
+pkgname=blackarch-devtools
+pkgver=0.1.0
+pkgrel=1
+pkgdesc='Development framework for the BlackArch Linux distribution written in Rust.'
+arch=('x86_64')
+url='https://github.com/Edu4rdSHL/blackarch-devtools'
+license=('GPL3')
+depends=('devtools' 'curl')
+makedepends=('rust')
+source=("https://github.com/Edu4rdSHL/$pkgname/archive/$pkgver.tar.gz")
+sha512sums=('d1f52d4e903faec9c50aab80f07161e015b92da1afbd546f1560588ff961bafdad9de7d7b4648784d993eaea58814c8d6cd82234c9f3f42bd15e5a408f0da381')
+
+build() {
+  cd "${pkgname}-${pkgver}"
+  cargo build --release
+}
+
+package() {
+  cd "${pkgname}-${pkgver}"
+
+  install -Dm 755 "target/release/${pkgname}" "${pkgdir}/usr/bin/${pkgname}"
+}
