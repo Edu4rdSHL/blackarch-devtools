@@ -44,7 +44,7 @@ FLAGS:
     -b, --build      Build package from PKGBUILD in clean chroot environment.
     -c, --clean      Clean chroot environment before building.
     -h, --help       Prints help information
-    -s, --setup      Setup the clean chroot environment.
+    -s, --setup      Setup the clean chroot environment (automatically setup blackarch keyring).
     -t, --test       Install and test package in clean chroot environment.
     -u, --update     Update BlackArch Linux chroot environment.
     -V, --version    Prints version information
