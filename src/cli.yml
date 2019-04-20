@@ -1,0 +1,53 @@
+name: blackarch-devtools
+version: "0.1.0"
+author: Eduard Tolosa <tolosaeduard@gmail.com>
+about: Development tools for BlackArch Linux
+args:
+    - setup:
+        short: s
+        long: setup
+        help: Setup the clean chroot environment.
+        takes_value: false
+    - update:
+        short: u
+        long: update
+        help: Update BlackArch Linux chroot environment.
+        takes_value: false
+    - build:
+        short: b
+        long: build
+        help: Build package from PKGBUILD in clean chroot environment.
+        takes_value: false
+    - test:
+        short: t
+        long: test
+        help: Install and test package in clean chroot environment.
+        takes_value: false
+        requires:
+          - package
+          - executable
+    - package:
+        short: p
+        long: package
+        help: Build package to install in the clean chroot environment.
+        takes_value: true
+    - executable:
+        short: e
+        long: executable
+        help: Name of the binary file provided by the package that you're installing in the chroot environment.
+        takes_value: true
+    - install-missing:
+        short: I
+        long: install-missing
+        help: Build package files that aren't available in repos. You can specify it multiple times.
+        multiple: true
+        takes_value: true
+    - clean:
+        short: c
+        long: clean
+        help: Clean chroot environment before building.
+        takes_value: false
+    - verbose:
+        short: v
+        multiple: true
+        help: Sets the level of verbosity
