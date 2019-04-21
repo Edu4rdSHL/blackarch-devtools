@@ -44,16 +44,24 @@ pub fn get_vars(get_var: &str) -> String {
 pub fn coloring(color: &str) -> termcolor::StandardStream {
     let mut stdout = StandardStream::stdout(ColorChoice::Always);
     if color == "green" {
-        stdout.set_color(ColorSpec::new().set_bold(true).set_fg(Some(Color::Green)));
+        stdout
+            .set_color(ColorSpec::new().set_bold(true).set_fg(Some(Color::Green)))
+            .unwrap();
         stdout
     } else if color == "yellow" {
-        stdout.set_color(ColorSpec::new().set_bold(true).set_fg(Some(Color::Yellow)));
+        stdout
+            .set_color(ColorSpec::new().set_bold(true).set_fg(Some(Color::Yellow)))
+            .unwrap();
         stdout
     } else if color == "red" {
-        stdout.set_color(ColorSpec::new().set_bold(true).set_fg(Some(Color::Red)));
+        stdout
+            .set_color(ColorSpec::new().set_bold(true).set_fg(Some(Color::Red)))
+            .unwrap();
         stdout
     } else {
-        stdout.set_color(ColorSpec::new().set_bold(true).set_fg(Some(Color::White)));
+        stdout
+            .set_color(ColorSpec::new().set_bold(true).set_fg(Some(Color::White)))
+            .unwrap();
         stdout
     }
 }
@@ -62,14 +70,15 @@ pub fn setup_chroot() {
     let chroot_dir = get_vars("chroot_dir");
     if Path::new(&chroot_dir).exists() {
         if Path::new(&chroot_dir).is_dir() {
-            writeln!(coloring("red"), "The directory {} already exists in the system, remove it or try with a different path.", &chroot_dir);
+            writeln!(coloring("red"), "The directory {} already exists in the system, remove it or try with a different path.", &chroot_dir).unwrap();
             process::exit(1);
         } else if Path::new(&chroot_dir).is_file() {
             writeln!(
                 coloring("red"),
                 "The file {} already exists in the system, remove it or try a different path.",
                 &chroot_dir
-            );
+            )
+            .unwrap();
             process::exit(1);
         }
     } else {
@@ -77,10 +86,11 @@ pub fn setup_chroot() {
             coloring("yellow"),
             "Creating chroot directory with name: {}",
             &chroot_dir
-        );
+        )
+        .unwrap();
         fs::create_dir(&chroot_dir)
             .expect("An error as ocurred while creating the chroot directoy.");
-        writeln!(coloring("yellow"), "Setting up chroot environment...");
+        writeln!(coloring("yellow"), "Setting up chroot environment...").unwrap();
         let devtools_mkarchroot = get_vars("mkarchroot");
         let devtools_nspawn = get_vars("nspawn");
         let chroot_root = get_vars("chroot_root");
@@ -90,12 +100,13 @@ pub fn setup_chroot() {
                 .status()
                 .expect("Failed to setup chroot environment.");
             if up_chroot.success() {
-                writeln!(coloring("yellow"), "Enabling multilib repos...");
+                writeln!(coloring("yellow"), "Enabling multilib repos...").unwrap();
                 Command::new(&devtools_nspawn).args(&[&chroot_root, "/bin/sh", "-c", "echo -e '\n[multilib]\nInclude = /etc/pacman.d/mirrorlist\n' | sudo tee -a /etc/pacman.conf > /dev/null"]).status().expect("Failed enabling multilib repos.");
                 writeln!(
                     coloring("yellow"),
                     "Configuring BlackArch Linux repo in the chroot environment..."
-                );
+                )
+                .unwrap();
                 let get_strap = Command::new(&devtools_nspawn)
                     .args(&[&chroot_root, "curl", "-O", "https://blackarch.org/strap.sh"])
                     .status()
@@ -115,13 +126,15 @@ pub fn setup_chroot() {
                                 .args(&[&chroot_root, "rm", "strap.sh"])
                                 .status()
                                 .expect("Error deleting strap.sh from chroot environment.");
-                            writeln!(coloring("green"), "Chroot environment setup complete!");
+                            writeln!(coloring("green"), "Chroot environment setup complete!")
+                                .unwrap();
                         } else {
                             writeln!(
                                 coloring("red"),
                                 "Can't install strap.sh into {}!",
                                 &chroot_root
-                            );
+                            )
+                            .unwrap();
                         }
                     }
                 }
@@ -131,13 +144,14 @@ pub fn setup_chroot() {
                 coloring("red"),
                 "Executable file {} not found, install the devtools package from repos.",
                 &devtools_mkarchroot
-            );
+            )
+            .unwrap();
         }
     }
 }
 
 pub fn update_chroot_packages() {
-    writeln!(coloring("green"), "Updating the chroot environment...");
+    writeln!(coloring("green"), "Updating the chroot environment...").unwrap();
     let devtools_nspawn = get_vars("nspawn");
     let chroot_root = get_vars("chroot_root");
     let update_packages = Command::new(&devtools_nspawn)
@@ -145,12 +159,13 @@ pub fn update_chroot_packages() {
         .status()
         .expect("Failed updating chroot environment");
     if update_packages.success() {
-        writeln!(coloring("green"), "Chroot environment updated correctly!");
+        writeln!(coloring("green"), "Chroot environment updated correctly!").unwrap();
     } else {
         writeln!(
             coloring("red"),
             "An error as ocurred while updating the chroot environment."
-        );
+        )
+        .unwrap();
     }
 }
 
@@ -164,9 +179,9 @@ pub fn build_package() {
         .status()
         .expect("Failed to build the package.");
     if build_package.success() {
-        writeln!(coloring("green"), "Package built sucessfully!");
+        writeln!(coloring("green"), "Package built sucessfully!").unwrap();
     } else {
-        writeln!(coloring("red"), "Failed to build the package.");
+        writeln!(coloring("red"), "Failed to build the package.").unwrap();
     }
 }
 
@@ -187,7 +202,8 @@ pub fn build_package_with_missing_deps(missing: &[&str]) {
         coloring("yellow"),
         "Installing missing packages: {:?}",
         missing
-    );
+    )
+    .unwrap();
     let install_missing = Command::new(&devtools_nspawn)
         .args(&[
             &chroot_blackarch,
@@ -212,7 +228,8 @@ pub fn sync_chroot() {
         "Syncing chroot copy {} with {} ...",
         &chroot_blackarch,
         &chroot_root
-    );
+    )
+    .unwrap();
     if Path::new(&chroot_dir).exists() {
         if Path::new(&chroot_blackarch).exists() {
             let fs_type = Command::new("stat")
@@ -255,12 +272,13 @@ pub fn sync_chroot() {
                     .status()
                     .expect("Failed to create copy of root chroot environment.");
                 if make_chroot_copy.success() {
-                    writeln!(coloring("green"), "Chroot environment is ready!");
+                    writeln!(coloring("green"), "Chroot environment is ready!").unwrap();
                 } else {
                     writeln!(
                         coloring("red"),
                         "Failed to create copy of root chroot environment."
-                    );
+                    )
+                    .unwrap();
                 }
             }
         } else {
@@ -283,12 +301,13 @@ pub fn sync_chroot() {
                     .status()
                     .expect("Failed to create chroot copy.");
                 if make_chroot_copy.success() {
-                    writeln!(coloring("green"), "Chroot environment is ready!");
+                    writeln!(coloring("green"), "Chroot environment is ready!").unwrap();
                 } else {
                     writeln!(
                         coloring("red"),
                         "Failed to create copy of root chroot environment."
-                    );
+                    )
+                    .unwrap();
                 }
             }
         }
@@ -296,7 +315,8 @@ pub fn sync_chroot() {
         writeln!(
             coloring("red"),
             "Chroot environment doesn't exists. Please use the -s option first."
-        );
+        )
+        .unwrap();
     }
 }
 
@@ -312,7 +332,8 @@ pub fn test_package(package: &str, executable: &str) {
             coloring("green"),
             "Package {} installed correctly! Testing it now...",
             &package
-        );
+        )
+        .unwrap();
         let execute_package = Command::new("sudo")
             .args(&["chroot", &chroot_blackarch, &executable])
             .status()
@@ -324,15 +345,17 @@ pub fn test_package(package: &str, executable: &str) {
                 coloring("green"),
                 "Binary {} sucessfully executed!",
                 executable
-            );
+            )
+            .unwrap();
         } else {
-            writeln!(coloring("red"), "An error as ocurred while trying to execute the binary {}, are you sure that it's the binary name?", &executable);
+            writeln!(coloring("red"), "An error as ocurred while trying to execute the binary {}, are you sure that it's the binary name?", &executable).unwrap();
         }
     } else {
         writeln!(
             coloring("red"),
             "Package {} wasn't installed in the chroot environment, please check the package name.",
             &package
-        );
+        )
+        .unwrap();
     }
 }
