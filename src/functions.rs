@@ -156,9 +156,9 @@ pub fn build_package() {
     update_chroot_packages();
     let devtools_makechrootpkg = get_vars("makechrootpkg");
     let chroot_dir = get_vars("chroot_dir");
-    let chroot_blackarch = get_vars("chroot_blackarch");
+    let blackarch_instance = get_vars("blackarch_instance");
     let build_package = Command::new(&devtools_makechrootpkg)
-        .args(&["-l", &chroot_blackarch, "-r", &chroot_dir])
+        .args(&["-l", &blackarch_instance, "-r", &chroot_dir])
         .status()
         .expect("Failed to build the package.");
     if build_package.success() {
