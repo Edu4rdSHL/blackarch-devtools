@@ -11,7 +11,7 @@ license=('GPL3')
 depends=('devtools' 'curl')
 makedepends=('rust')
 source=("https://github.com/Edu4rdSHL/$pkgname/archive/$pkgver.tar.gz")
-sha512sums=('12611360ebdbb98c321225b2d9f526fd58473ce90fca1a74f375fbd8c8915ccb42f9776efe036130ec2c4a91747dca5c6886fd5fc0df57bd62e26c58971c15f2')
+sha512sums=('d8eef1fb41d1673f6ad03655e1660b85a01e6525eecfdd736b7e947d0a918973bebbde09338b28128aabb3dff31c49265253c3cfa278eccf57aab6d6f1d603ac')
 
 build() {
   cd "${pkgname}-${pkgver}"
