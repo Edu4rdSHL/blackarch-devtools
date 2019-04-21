@@ -2,7 +2,7 @@
 # See COPYING for license details.
 
 pkgname=blackarch-devtools
-pkgver=0.1.1
+pkgver=0.1.2
 pkgrel=1
 pkgdesc='Development framework for the BlackArch Linux distribution written in Rust.'
 arch=('x86_64')
@@ -11,7 +11,7 @@ license=('GPL3')
 depends=('devtools' 'curl')
 makedepends=('rust')
 source=("https://github.com/Edu4rdSHL/$pkgname/archive/$pkgver.tar.gz")
-sha512sums=('287e35e2a78b6ffb259d5af865a548af37d8acc2e516bc0e63901ab79e0bdceb6ee25c62f9d64d75fa846c0e3d7583028e4bf8c7659264979203cb9d31b434ea')
+sha512sums=('5acf12707fd963df6705611ce047b78b1e410272a378df72c1b301b9c17a6c6f1932389b5d193acf0c44925928e13fcf2fd4d65774cfa9e039d27c4241b2d541')
 
 build() {
   cd "${pkgname}-${pkgver}"
