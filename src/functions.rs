@@ -239,53 +239,25 @@ pub fn sync_chroot() {
                     .spawn()
                     .expect("Failed to create chroot copy.");
             } else {
-                let delete_existing_chroot = Command::new("sudo")
+                let make_chroot_copy = Command::new("sudo")
                     .args(&[
-                        "rm",
-                        "--recursive",
-                        "--force",
-                        "--one-file-system",
+                        "rsync",
+                        "-a",
+                        "--delete",
+                        "-q",
+                        "-W",
+                        "-x",
+                        &chroot_root,
                         &chroot_blackarch,
                     ])
                     .status()
-                    .expect("Failed to delete chroot copy.");
-                if delete_existing_chroot.success() {
-                    let create_chroot_copy = Command::new("sudo")
-                        .args(&["mkdir", &chroot_blackarch])
-                        .status()
-                        .expect("Failed to create working copy of chroot environment.");
-                    if create_chroot_copy.success() {
-                        let make_chroot_copy = Command::new("sudo")
-                            .args(&[
-                                "rsync",
-                                "-a",
-                                "--delete",
-                                "-q",
-                                "-W",
-                                "-x",
-                                &chroot_root,
-                                &chroot_blackarch,
-                            ])
-                            .status()
-                            .expect("Failed to create copy of root chroot environment.");
-                        if make_chroot_copy.success() {
-                            writeln!(coloring("green"), "Chroot environment is ready!");
-                        } else {
-                            writeln!(
-                                coloring("red"),
-                                "Failed to create copy of root chroot environment."
-                            );
-                        }
-                    } else {
-                        writeln!(
-                            coloring("red"),
-                            "Error while trying to create the directory for the chroot copy."
-                        );
-                    }
+                    .expect("Failed to create copy of root chroot environment.");
+                if make_chroot_copy.success() {
+                    writeln!(coloring("green"), "Chroot environment is ready!");
                 } else {
                     writeln!(
                         coloring("red"),
-                        "Failed while trying to delete the chroot copy."
+                        "Failed to create copy of root chroot environment."
                     );
                 }
             }
