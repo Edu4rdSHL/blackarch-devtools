@@ -90,6 +90,8 @@ pub fn setup_chroot() {
                 .status()
                 .expect("Failed to setup chroot environment.");
             if up_chroot.success() {
+                writeln!(coloring("yellow"), "Enabling multilib repos...");
+                Command::new(&devtools_nspawn).args(&[&chroot_root, "/bin/sh", "-c", "echo -e '\n[multilib]\nInclude = /etc/pacman.d/mirrorlist\n' | sudo tee -a /etc/pacman.conf > /dev/null"]).status().expect("Failed enabling multilib repos.");
                 writeln!(
                     coloring("yellow"),
                     "Configuring BlackArch Linux repo in the chroot environment..."
