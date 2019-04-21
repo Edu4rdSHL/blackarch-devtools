@@ -1,3 +1,6 @@
 /target
 **/*.rs.bk
 /PKGBUILD*
+*.pkg.tar.xz
+*.log
+*.tar.gz
