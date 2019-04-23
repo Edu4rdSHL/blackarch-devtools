@@ -190,7 +190,15 @@ pub fn build_package_with_missing_deps(missing: &[&str]) {
     let chroot_blackarch = get_vars("chroot_blackarch");
     let devtools_nspawn = get_vars("nspawn");
     for missing in missing.iter() {
-        let copy_path: String = [&chroot_blackarch, "root/", &missing].concat();
+        let copy_path: String = [
+            &chroot_blackarch,
+            "root/",
+            &missing
+                .split("/")
+                .last()
+                .expect("Failed to gest package name."),
+        ]
+        .concat();
         println!("{}", &missing);
         println!("{}", &copy_path);
         Command::new("sudo")

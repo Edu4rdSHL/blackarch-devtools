@@ -18,6 +18,8 @@ args:
         long: build
         help: Build package from PKGBUILD in clean chroot environment.
         takes_value: false
+        conflicts_with:
+          - install-missing
     - test:
         short: t
         long: test
