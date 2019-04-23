@@ -2,6 +2,9 @@ name: blackarch-devtools
 version: "0.1.2"
 author: Eduard Tolosa <tolosaeduard@gmail.com>
 about: Development tools for BlackArch Linux
+settings:
+    - ArgRequiredElseHelp
+    - StrictUtf8
 args:
     - setup:
         short: s

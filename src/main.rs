@@ -9,10 +9,7 @@ mod functions;
 
 fn main() {
     let yaml = load_yaml!("cli.yml");
-    let matches = App::from_yaml(yaml)
-        .setting(AppSettings::ArgRequiredElseHelp)
-        .setting(AppSettings::StrictUtf8)
-        .get_matches();
+    let matches = App::from_yaml(yaml).get_matches();
     if matches.is_present("setup") {
         functions::setup_chroot();
     } else if matches.is_present("build") {

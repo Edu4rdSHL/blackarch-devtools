@@ -196,7 +196,7 @@ pub fn build_package_with_missing_deps(missing: &[&str]) {
             &missing
                 .split("/")
                 .last()
-                .expect("Failed to gest package name."),
+                .expect("Failed to get package name."),
         ]
         .concat();
         println!("{}", &missing);
