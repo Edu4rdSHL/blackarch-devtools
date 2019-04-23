@@ -323,6 +323,7 @@ pub fn sync_chroot() {
 pub fn test_package(package: &str, executable: &str) {
     let pacman = get_vars("pacman");
     let chroot_blackarch = get_vars("chroot_blackarch");
+    let devtools_nspawn = get_vars("nspawn");
     let install_package = Command::new("sudo")
         .args(&[&pacman, "--root", &chroot_blackarch, "-U", &package])
         .status()
@@ -335,7 +336,7 @@ pub fn test_package(package: &str, executable: &str) {
         )
         .unwrap();
         let execute_package = Command::new("sudo")
-            .args(&["chroot", &chroot_blackarch, &executable])
+            .args(&[&devtools_nspawn, &chroot_blackarch, executable])
             .status()
             .expect(
                 "Failed to execute the {} binary in the chroot environment, check the binary name.",
