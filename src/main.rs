@@ -2,7 +2,6 @@
 #[macro_use]
 extern crate clap;
 use clap::App;
-use clap::AppSettings;
 
 // Functions module
 mod functions;
