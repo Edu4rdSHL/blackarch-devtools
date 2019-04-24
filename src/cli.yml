@@ -36,11 +36,17 @@ args:
         long: package
         help: Build package to install in the clean chroot environment.
         takes_value: true
+        requires:
+          - test
+          - executable
     - executable:
         short: e
         long: executable
         help: Name of the binary file provided by the package that you're installing in the chroot environment.
         takes_value: true
+        requires:
+          - test
+          - package
     - install-missing:
         short: I
         long: install-missing
