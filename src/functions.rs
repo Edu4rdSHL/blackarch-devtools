@@ -112,32 +112,43 @@ pub fn setup_chroot() {
                     .status()
                     .expect("Failed to retrieve strap.sh from blackarch.org");
                 if get_strap.success() {
-                    let strap_perms = Command::new(&devtools_nspawn)
-                        .args(&[&chroot_root, "chmod", "+x", "strap.sh"])
+                    let strap_exec = Command::new(&devtools_nspawn)
+                        .args(&[&chroot_root, "sh", "strap.sh"])
                         .status()
-                        .expect("Failed to change permisions for strap.sh");
-                    if strap_perms.success() {
-                        let strap_exec = Command::new(&devtools_nspawn)
-                            .args(&[&chroot_root, "sh", "strap.sh"])
+                        .expect("Failed to exec strap.sh");
+                    if strap_exec.success() {
+                        Command::new(&devtools_nspawn)
+                            .args(&[&chroot_root, "rm", "strap.sh"])
                             .status()
-                            .expect("Failed to exec strap.sh");
-                        if strap_exec.success() {
-                            Command::new(&devtools_nspawn)
-                                .args(&[&chroot_root, "rm", "strap.sh"])
-                                .status()
-                                .expect("Error deleting strap.sh from chroot environment.");
-                            writeln!(coloring("green"), "Chroot environment setup complete!")
-                                .unwrap();
-                        } else {
-                            writeln!(
-                                coloring("red"),
-                                "Can't install strap.sh into {}!",
-                                &chroot_root
-                            )
-                            .unwrap();
-                        }
+                            .expect("Error deleting strap.sh from chroot environment.");
+                        writeln!(
+                            coloring("yellow"),
+                            "Doing first sync of the chroot environment, it will take a while..."
+                        )
+                        .unwrap();
+                        sync_chroot();
+                        writeln!(coloring("green"), "Chroot environment setup complete!").unwrap();
+                    } else {
+                        writeln!(
+                            coloring("red"),
+                            "Can't install strap.sh into {}!",
+                            &chroot_root
+                        )
+                        .unwrap();
                     }
+                } else {
+                    writeln!(
+                        coloring("red"),
+                        "Failed to retrieve strap.sh from blackarch.org!"
+                    )
+                    .unwrap();
                 }
+            } else {
+                writeln!(
+                    coloring("red"),
+                    "Failed to install base packages into chroot environment."
+                )
+                .unwrap();
             }
         } else {
             writeln!(
