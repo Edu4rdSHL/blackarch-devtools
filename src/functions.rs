@@ -121,11 +121,6 @@ pub fn setup_chroot() {
                             .args(&[&chroot_root, "rm", "strap.sh"])
                             .status()
                             .expect("Error deleting strap.sh from chroot environment.");
-                        writeln!(
-                            coloring("yellow"),
-                            "Doing first sync of the chroot environment, it will take a while..."
-                        )
-                        .unwrap();
                         sync_chroot();
                         writeln!(coloring("green"), "Chroot environment setup complete!").unwrap();
                     } else {
@@ -170,6 +165,7 @@ pub fn update_chroot_packages() {
         .status()
         .expect("Failed updating chroot environment");
     if update_packages.success() {
+        sync_chroot();
         writeln!(coloring("green"), "Chroot environment updated correctly!").unwrap();
     } else {
         writeln!(
@@ -181,6 +177,7 @@ pub fn update_chroot_packages() {
 }
 
 pub fn build_package() {
+    sync_chroot();
     update_chroot_packages();
     let devtools_makechrootpkg = get_vars("makechrootpkg");
     let chroot_dir = get_vars("chroot_dir");
@@ -197,7 +194,7 @@ pub fn build_package() {
 }
 
 pub fn build_package_with_missing_deps(missing: &[&str]) {
-    update_chroot_packages();
+    sync_chroot();
     let chroot_blackarch = get_vars("chroot_blackarch");
     let devtools_nspawn = get_vars("nspawn");
     for missing in missing.iter() {
