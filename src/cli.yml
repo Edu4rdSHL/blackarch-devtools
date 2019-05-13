@@ -11,11 +11,6 @@ args:
         long: setup
         help: Setup the clean chroot environment (automatically setup blackarch keyring).
         takes_value: false
-    - update:
-        short: u
-        long: update
-        help: Update BlackArch Linux chroot environment.
-        takes_value: false
     - build:
         short: b
         long: build
@@ -53,10 +48,10 @@ args:
         help: Build package files that aren't available in repos. You can specify it multiple times.
         multiple: true
         takes_value: true
-    - clean:
-        short: c
-        long: clean
-        help: Clean chroot environment before building.
+    - update:
+        short: u
+        long: update
+        help: Update chroot environment before building.
         takes_value: false
     - verbose:
         short: v

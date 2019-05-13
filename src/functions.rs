@@ -178,7 +178,6 @@ pub fn update_chroot_packages() {
 
 pub fn build_package() {
     sync_chroot();
-    update_chroot_packages();
     let devtools_makechrootpkg = get_vars("makechrootpkg");
     let chroot_dir = get_vars("chroot_dir");
     let blackarch_instance = get_vars("blackarch_instance");
