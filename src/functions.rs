@@ -350,22 +350,22 @@ pub fn test_package(package: &str, executable: &str) {
             &package
         )
         .unwrap();
-        let execute_package = Command::new("sudo")
+        Command::new("sudo")
             .args(&[&devtools_nspawn, &chroot_blackarch, executable])
             .status()
             .expect(
                 "Failed to execute the {} binary in the chroot environment, check the binary name.",
             );
-        if execute_package.success() {
-            writeln!(
-                coloring("green"),
-                "Binary {} sucessfully executed!",
-                executable
-            )
-            .unwrap();
-        } else {
-            writeln!(coloring("red"), "An error as ocurred while trying to execute the binary {}, are you sure that it's the binary name?", &executable).unwrap();
-        }
+    //        if execute_package.success() {
+    //          writeln!(
+    //            coloring("green"),
+    //          "Binary {} sucessfully executed!",
+    //        executable
+    //  )
+    //            .unwrap();
+    //      } else {
+    //        writeln!(coloring("red"), "An error as ocurred while trying to execute the binary {}, are you sure that it's the binary name?", &executable).unwrap();
+    //  }
     } else {
         writeln!(
             coloring("red"),
