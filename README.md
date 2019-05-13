@@ -33,20 +33,15 @@ $ blackarch-devtools
 The available options are:
 
 ```
-blackarch-devtools 0.1.0
-Eduard Tolosa <tolosaeduard@gmail.com>
-Development tools for BlackArch Linux
-
 USAGE:
     blackarch-devtools [FLAGS] [OPTIONS]
 
 FLAGS:
     -b, --build      Build package from PKGBUILD in clean chroot environment.
-    -c, --clean      Clean chroot environment before building.
     -h, --help       Prints help information
     -s, --setup      Setup the clean chroot environment (automatically setup blackarch keyring).
     -t, --test       Install and test package in clean chroot environment.
-    -u, --update     Update BlackArch Linux chroot environment.
+    -u, --update     Update chroot environment before building.
     -V, --version    Prints version information
     -v               Sets the level of verbosity
 
