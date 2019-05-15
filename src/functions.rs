@@ -354,7 +354,7 @@ pub fn test_package(package: &str, executable: &str) {
             .args(&[&devtools_nspawn, &chroot_blackarch, executable])
             .status()
             .expect(
-                "Failed to execute the binary in the chroot environment, check the binary name.",
+                "Something went wrong while trying to execute the binary in the chroot environment.",
             );
     } else {
         writeln!(
