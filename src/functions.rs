@@ -340,7 +340,14 @@ pub fn test_package(package: &str, executable: &str) {
     let chroot_blackarch = get_vars("chroot_blackarch");
     let devtools_nspawn = get_vars("nspawn");
     let install_package = Command::new("sudo")
-        .args(&[&pacman, "--root", &chroot_blackarch, "-U", &package])
+        .args(&[
+            &pacman,
+            "--root",
+            &chroot_blackarch,
+            "-U",
+            "--noconfirm",
+            &package,
+        ])
         .status()
         .expect("Failed to install the package in the chroot environment.");
     if install_package.success() {
