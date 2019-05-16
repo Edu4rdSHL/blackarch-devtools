@@ -206,8 +206,6 @@ pub fn build_package_with_missing_deps(missing: &[&str]) {
                 .expect("Failed to get package name."),
         ]
         .concat();
-        println!("{}", &missing);
-        println!("{}", &copy_path);
         Command::new("sudo")
             .args(&["cp", &missing, &copy_path])
             .spawn()
