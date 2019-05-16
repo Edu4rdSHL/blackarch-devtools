@@ -37,8 +37,9 @@ args:
     - executable:
         short: e
         long: executable
-        help: Name of the binary file provided by the package that you're installing in the chroot environment.
+        help: Execute the command to test the package in the chroot environment.
         takes_value: true
+        multiple: true
         requires:
           - test
           - package

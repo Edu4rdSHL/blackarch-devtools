@@ -356,7 +356,7 @@ pub fn test_package(package: &str, executable: &str) {
         )
         .unwrap();
         Command::new("sudo")
-            .args(&[&devtools_nspawn, &chroot_blackarch, executable])
+            .args(&[&devtools_nspawn, &chroot_blackarch, "sh", "-c", &executable])
             .status()
             .expect(
                 "Something went wrong while trying to execute the binary in the chroot environment.",

@@ -20,11 +20,8 @@ fn main() {
             .value_of("package")
             .expect("Failed to convert in a valid String")
             .to_string();
-        let executable = matches
-            .value_of("executable")
-            .expect("Failed to convert in a valid String")
-            .to_string();
-        functions::test_package(&package, &executable);
+        let executable: Vec<&str> = matches.values_of("executable").unwrap().collect();
+        functions::test_package(&package, &executable.join(" "));
     } else if matches.is_present("install-missing") {
         let missing_deps: Vec<&str> = matches.values_of("install-missing").unwrap().collect();
         functions::build_package_with_missing_deps(&missing_deps.as_slice());
