@@ -227,7 +227,18 @@ pub fn build_package_with_missing_deps(missing: &[&str]) {
         .status()
         .expect("Failed to install missing packages.");
     if install_missing.success() {
-        build_package();
+        let devtools_makechrootpkg = get_vars("makechrootpkg");
+        let chroot_dir = get_vars("chroot_dir");
+        let blackarch_instance = get_vars("blackarch_instance");
+        let build_package = Command::new(&devtools_makechrootpkg)
+            .args(&["-l", &blackarch_instance, "-r", &chroot_dir])
+            .status()
+            .expect("Failed to build the package.");
+        if build_package.success() {
+            writeln!(coloring("green"), "Package built sucessfully!").unwrap();
+        } else {
+            writeln!(coloring("red"), "Failed to build the package.").unwrap();
+        }
         Command::new(&devtools_nspawn).args(&[&chroot_blackarch, "/bin/sh", "-c", "rm -rf root/*"]);
     }
 }
