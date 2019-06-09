@@ -8,18 +8,18 @@ pkgdesc='Development framework for the BlackArch Linux distribution written in R
 arch=('x86_64')
 url='https://github.com/Edu4rdSHL/blackarch-devtools'
 license=('GPL3')
-depends=('devtools' 'curl')
-makedepends=('rust')
-source=("https://github.com/Edu4rdSHL/$pkgname/archive/$pkgver.tar.gz")
-sha512sums=('d8eef1fb41d1673f6ad03655e1660b85a01e6525eecfdd736b7e947d0a918973bebbde09338b28128aabb3dff31c49265253c3cfa278eccf57aab6d6f1d603ac')
+depends=('devtools')
+makedepends=('rust' 'git')
+source=("git+https://github.com/Edu4rdSHL/$pkgname.git")
+sha512sums=('SKIP')
 
 build() {
-  cd "${pkgname}-${pkgver}"
+  cd "${pkgname}"
   cargo build --release
 }
 
 package() {
-  cd "${pkgname}-${pkgver}"
+  cd "${pkgname}"
 
   install -Dm 755 "target/release/${pkgname}" "${pkgdir}/usr/bin/${pkgname}"
 }
