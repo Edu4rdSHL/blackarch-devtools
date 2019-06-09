@@ -8,10 +8,9 @@ It's a development framework for BlackArch Linux developers that allow you to do
 If you want to install it, you can do that manually compiling the source or using the precompiled binary.
 
 Prerequisites:
-- [curl](https://www.archlinux.org/packages/core/x86_64/curl/)
 - [devtools](https://www.archlinux.org/packages/extra/any/devtools/)
 
-You can install the prerequisites with `# pacman -S curl devtools`
+You can install the prerequisites with `# pacman -S devtools`
 
 **Manually:** You need to have [Rust](https://www.archlinux.org/packages/extra/x86_64/rust/) installed in your computer first. Install it with `# pacman -S rust`
 ```
