@@ -2,7 +2,7 @@
 Development framework for the BlackArch Linux distribution written in Rust.
 
 # What is it?
-It's a development framework for BlackArch Linux developers that allow you to do: setup chroot enviroment, build packages in chroot environment, build packages with dependencies that aren't in the repos, sync the working chroot copy with the root chroot copy, test packages in the chroot enviroment and more things.
+It's a development framework for BlackArch Linux developers that allow you to: set up a chroot enviroment, build packages in chroot environments, build packages with dependencies that aren't in the repos, sync the working chroot copy with the root chroot copy, test packages in the chroot enviroment and more things.
 
 # Installation
 If you want to install it, you can do that manually compiling the source or using the precompiled binary.
