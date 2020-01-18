@@ -102,6 +102,16 @@ pub fn setup_chroot() {
             if up_chroot.success() {
                 writeln!(coloring("yellow"), "Enabling multilib repos...").unwrap();
                 Command::new(&devtools_nspawn).args(&[&chroot_root, "/bin/sh", "-c", "echo -e '\n[multilib]\nInclude = /etc/pacman.d/mirrorlist\n' | sudo tee -a /etc/pacman.conf > /dev/null"]).status().expect("Failed enabling multilib repos.");
+                writeln!(coloring("yellow"), "Changing makepkg.conf to use zstd...").unwrap();
+                Command::new(&devtools_nspawn)
+                    .args(&[
+                        &chroot_root,
+                        "/bin/sh",
+                        "-c",
+                        "sed -i 's/^PKGEXT.*/PKGEXT='\\''.pkg.tar.zst'\\''/g' /etc/makepkg.conf",
+                    ])
+                    .status()
+                    .expect("Failed to change makepkg.conf");
                 writeln!(
                     coloring("yellow"),
                     "Configuring BlackArch Linux repo in the chroot environment..."
