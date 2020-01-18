@@ -22,8 +22,9 @@ $ blackarch-devtools
 ```
 **Using the binary:**
 ```
-$ git clone https://github.com/Edu4rdSHL/blackarch-devtools.git
-$ sudo cp blackarch-devtools/bin/blackarch-devtools /usr/bin/blackarch-devtools
+$ wget https://github.com/Edu4rdSHL/blackarch-devtools/releases/latest/download/blackarch-devtools
+$ chmod +x blackarch-devtools
+$ sudo cp blackarch-devtools /usr/bin/blackarch-devtools
 $ blackarch-devtools
 ```
 
