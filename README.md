@@ -13,6 +13,7 @@ Prerequisites:
 You can install the prerequisites with `# pacman -S devtools`
 
 **Manually:** You need to have [Rust](https://www.archlinux.org/packages/extra/x86_64/rust/) installed in your computer first. Install it with `# pacman -S rust`
+
 ```
 $ git clone https://github.com/Edu4rdSHL/blackarch-devtools.git
 $ cd blackarch-devtools
@@ -20,12 +21,21 @@ $ cargo build --release
 $ sudo cp target/release/blackarch-devtools /usr/bin/blackarch-devtools
 $ blackarch-devtools
 ```
+
 **Using the binary:**
+
 ```
 $ wget https://github.com/Edu4rdSHL/blackarch-devtools/releases/latest/download/blackarch-devtools
 $ chmod +x blackarch-devtools
 $ sudo cp blackarch-devtools /usr/bin/blackarch-devtools
 $ blackarch-devtools
+```
+
+**Using BlackArch repo**
+
+```
+$ sudo pacman -S blackarch-devtools-toolkit
+$ ba-dev
 ```
 
 # Usage
