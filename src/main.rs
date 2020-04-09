@@ -15,7 +15,7 @@ fn main() {
         functions::build_package();
     } else if matches.is_present("update") {
         functions::update_chroot_packages();
-    } else if matches.is_present("test") {
+    } else if matches.is_present("package") {
         let package = matches
             .value_of("package")
             .expect("Failed to convert in a valid String")

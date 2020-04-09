@@ -1,5 +1,5 @@
 name: blackarch-devtools
-version: "0.3.0"
+version: "0.4.0"
 author: Eduard Tolosa <tolosaeduard@gmail.com>
 about: Development tools for BlackArch Linux
 settings:
@@ -18,21 +18,12 @@ args:
         takes_value: false
         conflicts_with:
           - install-missing
-    - test:
-        short: t
-        long: test
-        help: Install and test package in clean chroot environment.
-        takes_value: false
-        requires:
-          - package
-          - executable
     - package:
         short: p
         long: package
         help: Build package to install in the clean chroot environment.
         takes_value: true
         requires:
-          - test
           - executable
     - executable:
         short: e
@@ -41,7 +32,6 @@ args:
         takes_value: true
         multiple: true
         requires:
-          - test
           - package
     - install-missing:
         short: I
