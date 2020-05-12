@@ -188,6 +188,29 @@ pub fn update_chroot_packages() {
 
 pub fn build_package() {
     sync_chroot();
+    if which::which("pkgcheck").is_ok() {
+        writeln!(coloring("yellow"), "Checking PKGBUILD with pkgcheck...").unwrap();
+        if Command::new("pkgcheck")
+            .arg("PKGBUILD")
+            .status()
+            .expect("Failed to execute pkgcheck command")
+            .success()
+        {
+            writeln!(coloring("green"), "No errors detected with pkgcheck!").unwrap();
+        } else {
+            writeln!(
+                coloring("red"),
+                "Some errors were detected, please fix them before pushing!"
+            )
+            .unwrap();
+        }
+    } else {
+        writeln!(
+            coloring("yellow"),
+            "Consideer installing pkgcheck with pip install pkgcheck-arch --user for automatic PKGBUILD syntax error checking."
+        )
+        .unwrap()
+    }
     let devtools_makechrootpkg = get_vars("makechrootpkg");
     let chroot_dir = get_vars("chroot_dir");
     let blackarch_instance = get_vars("blackarch_instance");
